@@ -7,7 +7,11 @@ import store from './store'
 
 import './plugins/element.js'
 import './plugins/views'
+
+import formCreate from '@form-create/element-ui'
+
 Vue.config.productionTip = false
+Vue.use(formCreate)
 
 let router = null
 let instance = null
