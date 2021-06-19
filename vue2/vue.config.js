@@ -5,6 +5,8 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
+const port = 9003
+
 module.exports = {
   filenameHashing: true,
   lintOnSave: process.env.NODE_ENV !== 'production',
@@ -13,7 +15,7 @@ module.exports = {
   devServer: {
     hot: true,
     disableHostCheck: true,
-    port: 9003,
+    port,
     overlay: {
       warnings: false,
       errors: true

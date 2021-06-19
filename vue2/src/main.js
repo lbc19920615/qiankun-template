@@ -5,6 +5,8 @@ import VueRouter from 'vue-router'
 import routes from './router'
 import store from './store'
 
+import './plugins/element.js'
+import './plugins/views'
 Vue.config.productionTip = false
 
 let router = null
