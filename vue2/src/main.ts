@@ -5,6 +5,12 @@ import VueRouter from 'vue-router'
 import routes from './router'
 import store from './store'
 
+declare global {
+  interface Window {
+    __POWERED_BY_QIANKUN__: any;
+  }
+}
+
 import './plugins/element.js'
 import './plugins/views'
 
@@ -13,21 +19,23 @@ import formCreate from '@form-create/element-ui'
 Vue.config.productionTip = false
 Vue.use(formCreate)
 
-let router = null
-let instance = null
-function render (props = {}) {
+let router: any
+let instance: any
+function render (props: {container: any} = { container: null}) {
   const { container } = props
-  router = new VueRouter({
-    base: window.__POWERED_BY_QIANKUN__ ? '/vue2/' : '/',
-    mode: 'history',
-    routes
-  })
-  Vue.use(VueRouter)
-  instance = new Vue({
-    router,
-    store,
-    render: h => h(App)
-  }).$mount(container ? container.querySelector('#app') : '#app')
+  if (container) {
+    router = new VueRouter({
+      base: window.__POWERED_BY_QIANKUN__ ? '/vue2/' : '/',
+      mode: 'history',
+      routes
+    })
+    Vue.use(VueRouter)
+    instance = new Vue({
+      router,
+      store,
+      render: h => h(App)
+    }).$mount(container ? container.querySelector('#app') : '#app')
+  }
 }
 
 // 独立运行时
