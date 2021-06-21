@@ -1,5 +1,8 @@
 import merge from 'lodash/merge'
 
+/**
+ * ValidateRule
+ */
 class ValidateRule {
   private options: any;
   // TODO type any
@@ -7,9 +10,20 @@ class ValidateRule {
     this.options = options
   }
 
+  /**
+   * required
+   * @param required
+   * @param message
+   */
   required(required = true, message = '必填项不能为空') {
     return merge({ required, message},  this.options)
   }
+
+  /**
+   * integer
+   * @param min
+   * @param max
+   */
   integer(min = 0, max: number = Number.MAX_VALUE) {
     return merge({
       min,

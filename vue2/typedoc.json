@@ -1,0 +1,7 @@
+{
+  "entryPoints": [
+    "src/components/ComUtils"
+  ],
+  "out": "doc/ts",
+  "tsconfig": "tsconfig2.json"
+}
