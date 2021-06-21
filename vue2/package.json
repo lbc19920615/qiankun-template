@@ -12,6 +12,7 @@
     "await-to-js": "^3.0.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.2",
+    "lodash": "^4.17.21",
     "vue": "^2.6.11",
     "vue-highlightjs": "^1.3.3",
     "vue-json-editor": "^1.4.3",
