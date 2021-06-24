@@ -13,6 +13,7 @@ declare global {
 
 import './plugins/element.js'
 import './plugins/views'
+import './plugins/mitt'
 import './plugins/cusform'
 
 import formCreate from '@form-create/element-ui'
