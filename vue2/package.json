@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@form-create/element-ui": "^2.5.7",
+    "@vue/composition-api": "^1.0.0-rc.12",
     "await-to-js": "^3.0.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.2",

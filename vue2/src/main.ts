@@ -11,15 +11,15 @@ declare global {
   }
 }
 
+import './plugins/composition'
+import './plugins/mitt'
+import './plugins/formCreate'
 import './plugins/element.js'
 import './plugins/views'
-import './plugins/mitt'
 import './plugins/cusform'
-
-import formCreate from '@form-create/element-ui'
+import './plugins/highlight'
 
 Vue.config.productionTip = false
-Vue.use(formCreate)
 
 type appVuePrototype = [{name: string, value: any}]
 function bootstrapAppProptotype(prototype?: appVuePrototype) {
