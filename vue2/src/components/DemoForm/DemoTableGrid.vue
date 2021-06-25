@@ -3,8 +3,6 @@
   <cus-grid-wrap @query_change="tableHttp.buildQuery" prefix="search1">
     <el-row type="flex">
       <cus-grid-search prefix="search1" :rules="rules">
-        <el-button v-slot:default icon="el-icon-search"
-                   @click="tableHttp.reload">search</el-button>
       </cus-grid-search>
     </el-row>
     <div>

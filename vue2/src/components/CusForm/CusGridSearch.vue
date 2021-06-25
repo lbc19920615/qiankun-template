@@ -22,10 +22,53 @@ $sel: "." + $tag;
 <script>
 import {emitter} from "@/plugins/mitt";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function SearchActions({ append = [], context  } = {}) {
+  return [
+    {
+      type:'el-button',
+      props: {
+        type: 'primary'
+      },
+      children:[{
+        type:'i',
+        class:'el-icon-search'
+      },' search'],
+      on:{
+        click:()=>{
+          context.$emit('search')
+        }
+      }
+    },
+    {
+      type:'el-button',
+      props: {
+      },
+      children:[{
+        type:'i',
+        class:'el-icon-refresh'
+      },' reset'],
+      on:{
+        click:()=>{
+          context.fApi.resetFields()
+          context.$emit('reset')
+        }
+      }
+    },
+    ...append
+  ]
+}
+
 export default {
   name: 'CusGridSearch',
   props: {
     rules: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    appendRules: {
       type: Array,
       default: () => {
         return []
@@ -38,11 +81,13 @@ export default {
       // 实例对象
       fApi: {},
       option:{
-        submitBtn: true,
-        resetBtn: true,
+        submitBtn: false,
+        resetBtn: false,
         form: {
-          // labelWidth: '180px',
           inline: true
+        },
+        wrap: {
+          labelWidth: 'auto',
         },
         row: {
           gutter: 0
@@ -53,6 +98,7 @@ export default {
       // 表单生成规则
       rule: [
         ...this.rules,
+        ...SearchActions({ append: this.appendRules, context: this})
       ]
     }
   },
