@@ -14,7 +14,8 @@ $sel: "." + $tag;
       :rule="rule"
       :value.sync="value"
       :option="option"
-    ></form-create>
+    >
+    </form-create>
   </div>
 </template>
 

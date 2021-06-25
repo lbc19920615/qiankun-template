@@ -73,8 +73,6 @@ function useTableHttp(tableObj) {
   };
 }
 
-import formCreate from '@form-create/element-ui'
-
 export default {
   name: "DemoTableGrid",
   components: {CusGridSearch, CusGridWrap,
