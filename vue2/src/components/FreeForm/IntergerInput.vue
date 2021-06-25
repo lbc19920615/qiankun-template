@@ -34,35 +34,59 @@ export default {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
-      famount: undefined
+      famount: undefined,
+      locked: false
     }
   },
   watch: {
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    famount(newVal) {
-      // console.log('newVal', newVal)
-      if (!newVal) {
-        this.$emit('input', undefined)
-        return false
-      }
-      if (checkIsPureNumber(newVal)) {
-        this.$emit('input', parseInt(newVal))
-      }
+    value: {
+      handler(newVal, oldVal) {
+        // console.log('obj.a changed', newVal, this.locked);
+        if (!this.locked) {
+          this.genInput(newVal)
+        }
+      },
+      immediate: true,
     }
   },
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  created() {
-    this.genInput()
-  },
   methods: {
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    genInput() {
-      this.famount = this.value
+    genInput(newVal) {
+      this.famount = this.parse(newVal)
     },
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    number() {
-      const v = this.famount.replace(IntergerRegexp, '')
-      this.famount = v.replace('.', '')
+    number(e) {
+      // console.log('e.target.value', e.target.value, typeof e.target.value)
+      this.famount = this.parse(e.target.value)
+      this.emitInput(this.famount)
+    },
+    parse(val) {
+      let newVal
+      if (typeof val === 'string') {
+        const v = val.replace(IntergerRegexp, '')
+        newVal = v.replace('.', '')
+      }
+      return newVal
+    },
+    emitInput(newVal) {
+      if (!this.locked) {
+        this.locked = true
+        if (!newVal) {
+          this.$emit('input', undefined)
+          this.$nextTick(() => {
+            this.locked = false
+          })
+          return false
+        }
+        if (checkIsPureNumber(newVal)) {
+          this.$emit('input', parseInt(newVal))
+          this.$nextTick(() => {
+            this.locked = false
+          })
+          return false
+        }
+        this.$nextTick(() => {
+          this.locked = false
+        })
+      }
     }
   }
 }
