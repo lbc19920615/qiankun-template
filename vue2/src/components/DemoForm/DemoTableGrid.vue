@@ -2,8 +2,8 @@
 <div class="demo-table-grid">
   <cus-grid-wrap @query_change="tableHttp.buildQuery" prefix="search1">
     <cus-grid-search prefix="search1" :rules="rules"></cus-grid-search>
-    <el-button size="mini" @click="tableHttp.reload">reload</el-button>
-
+    <el-button icon="el-icon-search"
+               @click="tableHttp.reload">search</el-button>
     <div>
       {{tableHttp.data}}
     </div>

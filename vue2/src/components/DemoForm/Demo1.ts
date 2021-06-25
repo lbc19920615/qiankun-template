@@ -1,4 +1,5 @@
 import { reactive } from '@vue/composition-api'
+import isFunction from 'lodash/isFunction'
 
 type QueryObject = {
   [K in any] : any
@@ -35,7 +36,7 @@ export function useTable() {
       data.page = page;
       data.loading = true;
       try {
-        if (req) {
+        if (isFunction(req)) {
           const obj = await req(data.query);
           methods.setData(obj.data);
           data.total = page * data.size;
