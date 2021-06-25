@@ -19,7 +19,7 @@ $sel: "." + $tag;
 const IntergerRegexp = /[^.\d]/g
 
 function checkIsPureNumber(val) {
-  if (!val || !val.indexOf) {
+  if (!val.indexOf) {
     return false
   }
   return !IntergerRegexp.test(val) && (val.indexOf('.') < 0)
@@ -40,6 +40,11 @@ export default {
   watch: {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     famount(newVal) {
+      // console.log('newVal', newVal)
+      if (!newVal) {
+        this.$emit('input', undefined)
+        return false
+      }
       if (checkIsPureNumber(newVal)) {
         this.$emit('input', parseInt(newVal))
       }
