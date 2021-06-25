@@ -40,6 +40,7 @@ export default {
   },
   watch: {
     value: {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       handler(newVal, oldVal) {
         // console.log('obj.a changed', newVal, this.locked);
         if (!this.locked) {
