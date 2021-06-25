@@ -13,11 +13,22 @@ $sel: "." + $tag;
 </template>
 
 <script>
+import {useTableGridSearchEvent} from "@/components/CusForm/hooks";
+
 export default {
   name: 'CusGridWrap',
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  props: {
+    prefix: String
+  },
   data () {
     return {}
+  },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setup(props, ctx) {
+    let [ onSearchQueryChange ] = useTableGridSearchEvent(props.prefix, ctx)
+    return {
+      onSearchQueryChange
+    }
   }
 }
 </script>

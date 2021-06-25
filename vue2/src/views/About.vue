@@ -1,5 +1,11 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <demo-table-grid></demo-table-grid>
   </div>
 </template>
+<script>
+import DemoTableGrid from "@/components/DemoForm/DemoTableGrid";
+export default {
+  components: {DemoTableGrid}
+}
+</script>

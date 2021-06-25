@@ -8,16 +8,56 @@ $sel: "." + $tag;
 
 <template>
   <div class="cus-grid-search">
-    <slot></slot>
+    <form-create
+      v-model="fApi"
+      :rule="rule"
+      :value.sync="value"
+      :option="option"
+    ></form-create>
   </div>
 </template>
 
 <script>
+import {emitter} from "@/plugins/mitt";
+
 export default {
   name: 'CusGridSearch',
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  props: {
+    rules: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    prefix: String
+  },
   data () {
-    return {}
+    return {
+      // 实例对象
+      fApi: {},
+      option:{
+        submitBtn: false,
+        resetBtn: false,
+        form: {
+          // labelWidth: '180px',
+          inline: true
+        },
+        row: {
+          gutter: 0
+        }
+      },
+      // 表单数据
+      value: {},
+      // 表单生成规则
+      rule: [
+        ...this.rules
+      ]
+    }
+  },
+  watch: {
+    value(newVal, oldVal) {
+      emitter.emit(`${this.prefix}:search-change`, newVal, oldVal)
+    }
   }
 }
 </script>
