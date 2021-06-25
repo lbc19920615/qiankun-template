@@ -1,9 +1,12 @@
 <template>
 <div class="demo-table-grid">
   <cus-grid-wrap @query_change="tableHttp.buildQuery" prefix="search1">
-    <cus-grid-search prefix="search1" :rules="rules"></cus-grid-search>
-    <el-button icon="el-icon-search"
-               @click="tableHttp.reload">search</el-button>
+    <el-row type="flex">
+      <cus-grid-search prefix="search1" :rules="rules">
+        <el-button v-slot:default icon="el-icon-search"
+                   @click="tableHttp.reload">search</el-button>
+      </cus-grid-search>
+    </el-row>
     <div>
       {{tableHttp.data}}
     </div>
@@ -70,9 +73,12 @@ function useTableHttp(tableObj) {
   };
 }
 
+import formCreate from '@form-create/element-ui'
+
 export default {
   name: "DemoTableGrid",
-  components: {CusGridSearch, CusGridWrap},
+  components: {CusGridSearch, CusGridWrap,
+  },
   data() {
     let rules = cusFormRule
     return {

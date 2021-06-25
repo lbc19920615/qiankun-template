@@ -9,6 +9,7 @@ $sel: "." + $tag;
 <template>
   <div class="cus-grid-search">
     <form-create
+      v-if="rule"
       v-model="fApi"
       :rule="rule"
       :value.sync="value"
@@ -36,8 +37,8 @@ export default {
       // 实例对象
       fApi: {},
       option:{
-        submitBtn: false,
-        resetBtn: false,
+        submitBtn: true,
+        resetBtn: true,
         form: {
           // labelWidth: '180px',
           inline: true
@@ -50,7 +51,7 @@ export default {
       value: {},
       // 表单生成规则
       rule: [
-        ...this.rules
+        ...this.rules,
       ]
     }
   },
