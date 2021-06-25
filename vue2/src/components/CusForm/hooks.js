@@ -1,9 +1,10 @@
 import { onMounted, onBeforeUnmount } from '@vue/composition-api'
 import { emitter } from "@/plugins/mitt";
 
-export function useTableGridSearchEvent(prefix = '') {
+export function useTableGridSearchEvent(prefix = '', ctx) {
   function onSearchQueryChange(searchQuery) {
-    console.log('onSearchQueryChange', searchQuery)
+    // console.log('onSearchQueryChange', searchQuery)
+    ctx.emit('query_change', searchQuery)
   }
 
   onMounted(() => {

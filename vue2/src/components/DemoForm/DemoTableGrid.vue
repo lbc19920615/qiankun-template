@@ -1,8 +1,12 @@
 <template>
 <div class="demo-table-grid">
-  <el-button size="mini" @click="tableHttp.reload">reload</el-button>
-  <cus-grid-wrap prefix="search1">
+  <cus-grid-wrap @query_change="tableHttp.buildQuery" prefix="search1">
     <cus-grid-search prefix="search1" :rules="rules"></cus-grid-search>
+    <el-button size="mini" @click="tableHttp.reload">reload</el-button>
+
+    <div>
+      {{tableHttp.data}}
+    </div>
   </cus-grid-wrap>
 </div>
 </template>
@@ -50,12 +54,16 @@ function useTableHttp(tableObj) {
     tableObj.methods.reload();
   }
 
-  function paginate(query = {}) {
-    tableObj.data.query = query;
-    tableObj.methods.paginate(2);
+  function paginate(page) {
+    tableObj.methods.paginate(page);
+  }
+
+  function buildQuery(val) {
+    tableObj.data.query = val;
   }
 
   return {
+    buildQuery,
     reload,
     paginate,
     data: tableObj.data,
