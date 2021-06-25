@@ -9,6 +9,7 @@
     "ts:doc": "typedoc --options typedoc.json"
   },
   "dependencies": {
+    "@chenfengyuan/vue-number-input": "^1.2.1",
     "@form-create/element-ui": "^2.5.7",
     "@vue/composition-api": "^1.0.0-rc.12",
     "await-to-js": "^3.0.0",
