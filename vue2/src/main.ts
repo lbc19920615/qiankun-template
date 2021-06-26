@@ -17,6 +17,7 @@ import './plugins/formCreate'
 import './plugins/element.js'
 import './plugins/views'
 import './plugins/cusform'
+import './plugins/freeTable'
 import './plugins/highlight'
 import * as requests from '@/plugins/request/index'
 
