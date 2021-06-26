@@ -21,6 +21,7 @@ import {useHttpTable} from "@/components/DemoForm/Demo1";
 import {cusFormRule} from "@/components/DemoForm/DemoGrid1";
 import {columns} from '@/components/DemoForm/Columns'
 import API from '@/api'
+import { onMounted } from '@vue/composition-api'
 
 export default {
   name: "DemoTableGrid",
@@ -44,6 +45,10 @@ export default {
     function buildQuery(val) {
       tableHttp.buildQuery(val)
     }
+
+    onMounted(() => {
+      tableHttp.reload()
+    })
 
     return {
       buildQuery,
