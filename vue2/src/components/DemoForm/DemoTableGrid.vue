@@ -38,7 +38,7 @@ export default {
   setup(props, ctx) {
     let tableHttp = useHttpTable(
       (query) => {
-        return API.demo1.getList(query)
+        return API.Demo1.list(query)
       }
     );
 
