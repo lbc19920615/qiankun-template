@@ -1,9 +1,9 @@
 import { reactive } from '@vue/composition-api'
 import isFunction from 'lodash/isFunction'
 import to from "await-to-js";
-import {QueryObject, TablePagenationObject} from "@/types/common";
+import {QueryRequest, TablePagenationObject} from "@/types/common";
 
-type ReqType = ((query: QueryObject) => Promise<any>) | undefined;
+type ReqType = QueryRequest | undefined;
 
 class TablePaginate {
   data = reactive({

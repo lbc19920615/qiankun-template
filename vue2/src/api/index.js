@@ -16,24 +16,26 @@
  * let xx = await this.$api.getBanner({}, {timeout: 1000, headers:{ aaa: 111 }})
  */
 import { request } from '@/plugins/request'
+import  * as pathToRegexp from 'path-to-regexp'
 // import qs from 'qs'
 // console.log('qs:', qs)
-
-const apiMap = {
-  getList: { method: 'get', url: '/mock/11/api/list' },
-  login: { method: 'post', url: '/login' }
-}
 
 function injectRequest(apiObj) {
   const requestMap = {}
   Object.keys(apiObj).forEach((alias) => {
     let { method, url, config } = apiObj[alias]
     method = method.toUpperCase()
-    requestMap[alias] = (dataOrParams = {}, instanceConf = {}) => {
-      const keyName = ['PUT', 'POST', 'PATCH'].includes(method) ? 'data' : 'params'
+    const keyName = ['PUT', 'POST', 'PATCH'].includes(method) ? 'data' : 'params'
+
+    requestMap[alias] = (dataOrParams = {}, {
+      instanceConf = {},
+      urlParams = {}
+    } = {}) => {
+      let trueUrl = pathToRegexp.compile(url)(urlParams)
+      console.log(urlParams, trueUrl)
       return request({
         method,
-        url,
+        url: trueUrl,
         // [keyName]: method === 'POST' ? qs.stringify(dataOrParams) : dataOrParams,
         [keyName]: dataOrParams,
         ...Object.assign(config || {}, instanceConf)
@@ -43,4 +45,26 @@ function injectRequest(apiObj) {
   return requestMap
 }
 
-export default injectRequest(apiMap)
+
+const apiMap = {
+}
+
+// https://webpack.js.org/guides/dependency-management/#requirecontext
+const modulesFiles = require.context('./modules', true, /\.js$/)
+
+// you do not need `import app from './modules/app'`
+// it will auto require all vuex module from modules file
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const modules = modulesFiles.keys().reduce((modules, modulePath) => {
+  // set './app.js' => 'app'
+  const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+  const value = modulesFiles(modulePath)
+  modules[moduleName] = value.default
+  apiMap[moduleName] = injectRequest(value.default)
+  return modules
+}, {})
+
+
+
+
+export default apiMap

@@ -73,3 +73,4 @@ export async function unmount () {
   instance = null
   onUnmount()
 }
+

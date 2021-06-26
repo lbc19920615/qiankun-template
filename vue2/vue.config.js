@@ -7,13 +7,20 @@ function resolve (dir) {
 
 const port = 9003
 
+console.log(process.env.VUE_APP_BASEURL)
+
 module.exports = {
   filenameHashing: true,
   lintOnSave: process.env.NODE_ENV !== 'production',
   runtimeCompiler: true,
   productionSourceMap: false,
   devServer: {
-    proxy: process.env.VUE_APP_BASEURL,
+    proxy: {
+      '/mock': {
+        target: process.env.VUE_APP_BASEURL,
+        changeOrigin: true,
+      }
+    },
     hot: true,
     disableHostCheck: true,
     port,
