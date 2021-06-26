@@ -8,3 +8,8 @@ export interface TablePagenationObject extends QueryObject {
 }
 
 export type QueryRequest = ((query: QueryObject) => Promise<any>)
+
+export interface QueryParams {
+  urlParams: QueryObject,
+  instanceConf: QueryObject
+}
