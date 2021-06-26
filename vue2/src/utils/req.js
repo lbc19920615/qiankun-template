@@ -41,3 +41,23 @@ export function POST(url, config = {}) {
     })
   }
 }
+
+export function PUT(url, config = {}) {
+  return function (target, key, descriptor) {
+    descriptor.value = createRequest({
+      method: 'put',
+      url,
+      config
+    })
+  }
+}
+
+export function DELETE(url, config = {}) {
+  return function (target, key, descriptor) {
+    descriptor.value = createRequest({
+      method: 'delete',
+      url,
+      config
+    })
+  }
+}
