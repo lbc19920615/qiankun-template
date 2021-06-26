@@ -1,15 +1,17 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import ElementPlus from 'element-plus'
+import 'element-plus/lib/theme-chalk/index.css'
+
 import router from './router'
 import store from './store'
-import {
-  registerMicroApps,
-  start,
-  // setDefaultMountApp,
-  initGlobalState
-} from 'qiankun'
+import './router/permission'
+import { initGlobalState, registerMicroApps, start } from 'qiankun'
 
 createApp(App)
+  .use(ElementPlus, {
+    size: 'medium' // set element-ui default size
+  })
   .use(store)
   .use(router)
   .mount('#main')
@@ -66,4 +68,4 @@ setGlobalState({
 // setDefaultMountApp('/vue3')
 
 // 启动 qiankun
-start()
+start({ prefetch: true })
