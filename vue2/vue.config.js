@@ -13,6 +13,7 @@ module.exports = {
   runtimeCompiler: true,
   productionSourceMap: false,
   devServer: {
+    proxy: process.env.VUE_APP_BASEURL,
     hot: true,
     disableHostCheck: true,
     port,
