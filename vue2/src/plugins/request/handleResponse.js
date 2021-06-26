@@ -3,7 +3,15 @@ export default (response) => {
   const status = response.status
   // 如果http响应状态码response.status正常，则直接返回数据
   if ((status >= 200 && status <= 300) || status === 304) {
-    return response
+    const responseStatus = response.data.status
+    if (responseStatus === 1) {
+      return response.data
+    } else {
+      return {
+        code: 500,
+        message: 'responseStatus fail'
+      }
+    }
     // eslint-disable-next-line brace-style
   }
 

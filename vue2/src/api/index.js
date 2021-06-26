@@ -20,7 +20,7 @@ import { request } from '@/plugins/request'
 // console.log('qs:', qs)
 
 const apiMap = {
-  getBanner: { method: 'get', url: '/home/banner' },
+  getList: { method: 'get', url: '/mock/11/api/list' },
   login: { method: 'post', url: '/login' }
 }
 
