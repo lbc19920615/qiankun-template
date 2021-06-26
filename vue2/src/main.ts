@@ -19,10 +19,6 @@ import './plugins/views'
 import './plugins/cusform'
 import './plugins/freeTable'
 import './plugins/highlight'
-import * as requests from '@/plugins/request/index'
-
-Vue.prototype.$request = requests.request
-Vue.prototype.$intactRequest = requests.intactRequest
 
 Vue.config.productionTip = false
 
@@ -44,6 +40,13 @@ function render (renderProps: {container: any, prototype?: appVuePrototype} = { 
       store,
       render: h => h(App)
     }).$mount(container ? container.querySelector('#app') : '#app')
+    // 解决微应用vue devtools挂载失败问题
+    if (process.env.NODE_ENV === 'development') {
+      // vue-devtools  加入此处代码即可
+      const instanceDiv = document.createElement('div') as any
+      instanceDiv.__vue__ = instance
+      document.body.appendChild(instanceDiv)
+    }
   }
 }
 

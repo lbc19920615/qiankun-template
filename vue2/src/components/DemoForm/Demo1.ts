@@ -1,19 +1,12 @@
 import { reactive } from '@vue/composition-api'
 import isFunction from 'lodash/isFunction'
+import to from "await-to-js";
+import {QueryObject, TablePagenationObject} from "@/types/common";
 
-type QueryObject = {
-  [K in any] : any
-}
+type ReqType = ((query: QueryObject) => Promise<any>) | undefined;
 
-export function useTable() {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const ret: {
-    methods: { reload(): void; setData(arr): void; paginate(page?: number): Promise<void> };
-    data: QueryObject,
-    setReq: (v) => void;
-  } = {};
-  const data = reactive({
+class TablePaginate {
+  data = reactive({
     list: [],
     total: 0,
     size: 10,
@@ -21,38 +14,51 @@ export function useTable() {
     loading: false,
     query: {},
   });
-  let req;
 
-  const methods = {
-    setData(arr) {
-      data.list = arr;
-    },
-    reload() {
-      data.page = 1
-      data.query = {};
-      methods.paginate(1);
-    },
-    async paginate(page = 1) {
-      data.page = page;
-      data.loading = true;
-      try {
-        if (isFunction(req)) {
-          const obj = await req(data.query);
-          methods.setData(obj.data);
-          data.total = page * data.size;
-          data.loading = false;
-        }
-      } catch (e) {
-        console.log(e);
+  req: ReqType;
+
+  buildQuery(val) {
+    console.log('buildQuery', val, this)
+    this.data.query = val;
+  }
+
+  async reload() {
+    return this.paginate(1);
+  }
+
+  async paginate(page = 1) {
+    const data = this.data
+    data.page = page
+    data.loading = true;
+    if (this.req && isFunction(this.req)) {
+      const [err, obj] = await to(
+        this.req(data.query)
+      );
+      if (err) {
+        return Promise.reject(err)
       }
-    },
-  };
+      if (obj) {
+        const d = obj as TablePagenationObject
+        data.list = d.data;
+        data.total = d.total;
+        data.loading = false;
+      }
+    }
+  }
+}
 
-  ret.setReq = function (v) {
-    req = v;
-  };
+export function useTable() {
+  return new TablePaginate()
+}
 
-  ret.data = data;
-  ret.methods = methods;
-  return ret;
+
+class HttpTablePagniate extends TablePaginate {
+  constructor(req) {
+    super();
+    this.req = req
+  }
+}
+
+export function useHttpTable(req: ReqType) {
+  return new HttpTablePagniate(req)
 }
