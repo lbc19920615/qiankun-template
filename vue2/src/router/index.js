@@ -1,16 +1,20 @@
+import VueRouter from 'vue-router'
+import routes from './routes'
+import Vue from 'vue'
 
-import Home from '../views/Home.vue'
+export const routers = routes
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
-export default routes
+Vue.use(VueRouter)
+
+const createRouter = () =>
+  new VueRouter({
+    base: window.__POWERED_BY_QIANKUN__ ? '/vue2/' : '/',
+    mode: 'history',
+    routes: []
+  })
+
+export let router = createRouter()
+
+export function onUnmount() {
+  router = null
+}

@@ -87,7 +87,7 @@ export default {
           inline: true
         },
         wrap: {
-          labelWidth: 'auto',
+          labelWidth: '120',
         },
         row: {
           gutter: 0
