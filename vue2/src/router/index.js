@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 
 const createRouter = () =>
   new VueRouter({
-    base: window.__POWERED_BY_QIANKUN__ ? '/vue2/' : '/',
+    base: window.__POWERED_BY_QIANKUN__ ? '/app1/' : '/',
     mode: 'history',
     routes: []
   })

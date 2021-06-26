@@ -8,9 +8,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
+    path: '/page1',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/page2',
     name: 'About',
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  },
 ]
 export default routes
