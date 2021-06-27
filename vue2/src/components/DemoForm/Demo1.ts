@@ -18,7 +18,7 @@ class TablePaginate {
   req: ReqType;
 
   buildQuery(val) {
-    console.log('buildQuery', val, this)
+    // console.log('buildQuery', val, this)
     this.data.query = val;
   }
 

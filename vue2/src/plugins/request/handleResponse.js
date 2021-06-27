@@ -4,8 +4,13 @@ export default (response) => {
   // 如果http响应状态码response.status正常，则直接返回数据
   if ((status >= 200 && status <= 300) || status === 304) {
     const responseStatus = response.data.status
+    // console.log('responseStatus', responseStatus)
     if (responseStatus === 1) {
-      return response.data
+      return {
+        code: 200,
+        data: response.data,
+        message: ''
+      }
     } else {
       return {
         code: 500,

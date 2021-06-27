@@ -19,6 +19,7 @@ import './plugins/views'
 import './plugins/cusform'
 import './plugins/freeTable'
 import './plugins/highlight'
+import './plugins/components'
 
 Vue.config.productionTip = false
 

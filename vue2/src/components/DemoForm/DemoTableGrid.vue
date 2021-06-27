@@ -22,16 +22,26 @@ import {cusFormRule} from "@/components/DemoForm/DemoGrid1";
 import {columns} from '@/components/DemoForm/Columns'
 import API from '@/api'
 import { onMounted } from '@vue/composition-api'
+import to from 'await-to-js'
 
 export default {
   name: "DemoTableGrid",
   components: {CusGridSearch, CusGridWrap,
   },
   data() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    let self = this
     let rules = cusFormRule
     return {
       rules,
-      columns
+      columns: columns(this, {
+        ['edit'](row) {
+          self.onEdit(row)
+        },
+        ['del'](row) {
+          self.onDel(row)
+        }
+      })
     }
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -50,7 +60,30 @@ export default {
       tableHttp.reload()
     })
 
+    function onEdit() {
+      alert('onEdit')
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async function onDel(row) {
+      const [err, ret] = await to(
+        API.Demo1.delById({}, {
+          urlParams: {
+            id: 1
+          }
+        })
+      )
+      console.log(ret)
+      if (err) {
+        return this.$message.error('失败')
+      }
+      this.$message.success('成功')
+      tableHttp.reload()
+    }
+
     return {
+      onEdit,
+      onDel,
       buildQuery,
       tableHttp,
     }
