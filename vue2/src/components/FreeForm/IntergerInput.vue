@@ -7,18 +7,19 @@ $sel: "." + $tag;
 </style>
 
 <template>
-  <el-input
-    v-model="famount"
-    class="interger-input"
-    v-bind="$attrs"
-    @keyup.native="number"
-  ></el-input>
+  <el-input v-model.number="famount"
+            @keyup.native="keyUp"
+            @keydown.native="keyDown"
+            @input="onInput"></el-input>
 </template>
 
 <script>
 const IntergerRegexp = /[^.\d]/g
 
 function checkIsPureNumber(val) {
+  if (typeof val === 'number') {
+    return true
+  }
   if (!val.indexOf) {
     return false
   }
@@ -44,46 +45,67 @@ export default {
       handler(newVal, oldVal) {
         // console.log('obj.a changed', newVal, this.locked);
         if (!this.locked) {
-          this.genInput(newVal)
+          if (checkIsPureNumber(newVal)) {
+            this.genInput(newVal)
+            return false
+          }
+          if (newVal === '') {
+            this.genInput(undefined)
+            return false
+          }
+          if (typeof newVal === 'string') {
+            this.genInput(this.parse(newVal))
+            return false
+          }
         }
       },
       immediate: true,
     }
   },
   methods: {
-    genInput(newVal) {
-      this.famount = this.parse(newVal)
+    onInput() {
+      console.log(this.famount, typeof this.famount)
+      if (this.famount === '') {
+        this.emitInput(undefined)
+      } else {
+        let isInt = checkIsPureNumber(this.famount)
+        if (isInt) {
+          this.emitInput( this.famount)
+        }
+      }
     },
-    number(e) {
+    genInput(newVal) {
+      this.famount = newVal
+    },
+    keyDown() {
+      // console.log(e.target)
+    },
+    keyUp(e) {
       // console.log('e.target.value', e.target.value, typeof e.target.value)
       this.famount = this.parse(e.target.value)
-      this.emitInput(this.famount)
+      // e.target.value = this.parse(e.target.value)
+      // this.emitInput(this.famount)
     },
     parse(val) {
       let newVal
+      if (val === '') {
+        return undefined
+      }
       if (typeof val === 'string') {
         const v = val.replace(IntergerRegexp, '')
         newVal = v.replace('.', '')
       }
-      return newVal
+      if (newVal === '') {
+        return undefined
+      }
+      console.log('newVal', newVal)
+      return parseFloat(newVal)
     },
     emitInput(newVal) {
+      console.log('this.locked', this.locked, newVal)
       if (!this.locked) {
         this.locked = true
-        if (!newVal) {
-          this.$emit('input', undefined)
-          this.$nextTick(() => {
-            this.locked = false
-          })
-          return false
-        }
-        if (checkIsPureNumber(newVal)) {
-          this.$emit('input', parseInt(newVal))
-          this.$nextTick(() => {
-            this.locked = false
-          })
-          return false
-        }
+        this.$emit('input', newVal)
         this.$nextTick(() => {
           this.locked = false
         })

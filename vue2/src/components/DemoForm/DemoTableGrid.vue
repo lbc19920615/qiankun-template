@@ -11,6 +11,15 @@
                 :total="tableHttp.data.total"
                 :pagination="true"></free-table>
   </cus-grid-wrap>
+
+{{renderDialogVisible + ''}}
+  <el-button @click="showAddDialog">添加</el-button>
+  <el-button @click="showEditDialog">编辑</el-button>
+  <cus-detail-dialog
+    :title="renderDialogTitle + '表格'"
+    width="1200px"
+    :visible.sync="renderDialogVisible"
+    :render="renderDialog"></cus-detail-dialog>
 </div>
 </template>
 
@@ -19,14 +28,22 @@ import CusGridWrap from "@/components/CusForm/CusGridWrap";
 import CusGridSearch from "@/components/CusForm/CusGridSearch";
 import {useHttpTable} from "@/components/DemoForm/Demo1";
 import {cusFormRule} from "@/components/DemoForm/DemoGrid1";
-import {columns} from '@/components/DemoForm/Columns'
+import { columns, useDialog } from '@/components/DemoForm/Columns'
 import API from '@/api'
 import { onMounted } from '@vue/composition-api'
 import to from 'await-to-js'
+import CusDetailDialog from '@/components/CusDialog/CusDetailDialog'
+
+import Vue from 'vue'
+import EditForm from '@/components/DemoForm/EditForm'
+Vue.component(EditForm.name, EditForm)
 
 export default {
   name: "DemoTableGrid",
-  components: {CusGridSearch, CusGridWrap,
+  components: {
+    CusDetailDialog,
+    CusGridSearch,
+    CusGridWrap,
   },
   data() {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -81,8 +98,11 @@ export default {
       tableHttp.reload()
     }
 
+    let dialogUtils = useDialog(props, ctx)
+
     return {
       onEdit,
+      ...dialogUtils,
       onDel,
       buildQuery,
       tableHttp,

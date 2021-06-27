@@ -5,4 +5,4 @@ Vue.component('interger-input', IntergerInput)
 
 
 import VueNumberInput from '@chenfengyuan/vue-number-input';
-Vue.component(VueNumberInput.name, VueNumberInput);
+Vue.component('v-number-input', VueNumberInput);

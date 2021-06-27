@@ -1,4 +1,7 @@
 import './public-path'
+
+import './styles/index.less'
+
 import Vue from 'vue'
 import App from './App.vue'
 import { router, onUnmount } from './router/index'
