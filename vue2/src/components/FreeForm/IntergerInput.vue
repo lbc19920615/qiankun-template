@@ -20,6 +20,9 @@ function checkIsPureNumber(val) {
   if (typeof val === 'number') {
     return true
   }
+  if (typeof val === 'undefined') {
+    return false
+  }
   if (!val.indexOf) {
     return false
   }
@@ -49,7 +52,7 @@ export default {
             this.genInput(newVal)
             return false
           }
-          if (newVal === '') {
+          if (newVal === '' || typeof newVal === 'undefined') {
             this.genInput(undefined)
             return false
           }

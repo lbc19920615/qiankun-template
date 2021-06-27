@@ -21,48 +21,43 @@ $sel: "." + $tag;
 <script>
 import { EditType } from '@/utils/enums'
 import { createFiled } from '@/utils/form'
+import { computed } from '@vue/composition-api'
+import { EditFormMixin, useFormCreate } from '@/components/DemoForm/EditFormMixin'
 
 export const cusFormRule = [
   createFiled([
+    'input',
+    'name',
+    'Name'
+  ], [
+    { required: true, message: '必填' },
+  ]),
+  createFiled([
     'interger-input',
-    'cus-field1',
+    'age',
     '小于11数字'
   ], [
     { required: true, message: '必填' },
     {type: 'number', min:10, required: true, message:'最小为10的数字'}
-  ])
+  ]),
 ]
 
 export default {
   name: 'EditForm',
-  props: {
-    type: {
-      type: Object,
-      default() {
-        return EditType.edit
-      }
-    }
-  },
-  computed: {
-    isEditForm() {
-      return this.type === EditType.edit
-    }
-  },
-  mounted () {
-    console.log(this.isEditForm)
-  },
-  data () {
+  mixins: [
+    EditFormMixin
+  ],
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setup(props, ctx) {
+    let isEditForm = computed(() => {
+      return props.type === EditType.edit
+    })
+
+    let formCreate = useFormCreate(props, isEditForm)
+
     return {
-      // 实例对象
-      fApi: {},
-      option:{
-      },
-      // 表单数据
-      value: {},
-      // 表单生成规则
-      rule: [
-        ...cusFormRule
-      ]
+      ...formCreate,
+      isEditForm
     }
   }
 }

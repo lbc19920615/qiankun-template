@@ -6,7 +6,7 @@ export default class {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
   static list(paramsOrData: QueryObject, config: QueryParams) {}
 
-  @GET('/mock/11/api/list/:id')
+  @GET('/mock/11/api/detail/:id')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
   static getById(paramsOrData: QueryObject, config: QueryParams) {}
 

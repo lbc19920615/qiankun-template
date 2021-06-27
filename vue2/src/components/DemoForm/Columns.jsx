@@ -36,29 +36,34 @@ export let useDialog = () => {
   let renderDialogTitle = computed(() => {
     return isEdit() ? '编辑' : '添加'
   })
+
+  let renderDialogModel = ref(null)
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function renderDialog(h) {
-    console.log('renderDialog', isEdit())
+    // console.log(renderDialogModel.value)
     if (isEdit()) {
       return (
-        <edit-form type={EditType.edit}></edit-form>
+        <edit-form append={renderDialogModel.value} type={EditType.edit}></edit-form>
       )
     } else {
       return (
-        <edit-form type={EditType.add}></edit-form>
+        <edit-form append={renderDialogModel.value} type={EditType.add}></edit-form>
       )
     }
   }
   function toggleDialogVisible(v) {
     renderDialogVisible.value = v
   }
-  function showEditDialog() {
+  function showEditDialog(model = {}) {
     // renderDialogTitle.value = '编辑'
+    renderDialogModel.value = model
     renderDialogType.value = EditType.edit
     toggleDialogVisible(true)
   }
   function showAddDialog() {
     // renderDialogTitle.value = '添加'
+    renderDialogModel.value = {}
     renderDialogType.value = EditType.add
     toggleDialogVisible(true)
   }

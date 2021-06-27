@@ -3,8 +3,13 @@
   <cus-grid-wrap @query_change="buildQuery"  prefix="search1">
     <el-row type="flex">
       <cus-grid-search prefix="search1" :rules="rules"
-                       @search="tableHttp.paginate(1)">
+                       @search="tableHttp.paginate(1)"
+        :append-rules="appendRules"
+      >
       </cus-grid-search>
+
+<!--      {{renderDialogVisible + ''}}-->
+<!--      <el-button @click="showAddDialog">添加</el-button>-->
     </el-row>
     <free-table :data="tableHttp.data.list"
                 :column="columns"
@@ -12,9 +17,6 @@
                 :pagination="true"></free-table>
   </cus-grid-wrap>
 
-{{renderDialogVisible + ''}}
-  <el-button @click="showAddDialog">添加</el-button>
-  <el-button @click="showEditDialog">编辑</el-button>
   <cus-detail-dialog
     :title="renderDialogTitle + '表格'"
     width="1200px"
@@ -48,9 +50,30 @@ export default {
   data() {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     let self = this
+
+    let appendRules = [
+      {
+        type:'el-button',
+        props: {
+        },
+        children:[{
+          type:'i',
+          class:'el-icon-plus'
+        },' add'],
+        on:{
+          click:()=>{
+            self.showAddDialog()
+          }
+        }
+      },
+    ]
+
     let rules = cusFormRule
+
+
     return {
       rules,
+      appendRules,
       columns: columns(this, {
         ['edit'](row) {
           self.onEdit(row)
@@ -77,20 +100,29 @@ export default {
       tableHttp.reload()
     })
 
-    function onEdit() {
-      alert('onEdit')
+    async function onEdit(row) {
+      const [err, ret] = await to(
+        API.Demo1.getById({}, {
+          urlParams: {
+            id: row.id
+          }
+        })
+      )
+      if (err) {
+        return this.$message.error('失败')
+      }
+      dialogUtils.showEditDialog(ret.data)
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async function onDel(row) {
-      const [err, ret] = await to(
+      const [err] = await to(
         API.Demo1.delById({}, {
           urlParams: {
-            id: 1
+            id: row.id
           }
         })
       )
-      console.log(ret)
       if (err) {
         return this.$message.error('失败')
       }
