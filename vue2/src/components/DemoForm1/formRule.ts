@@ -1,5 +1,6 @@
 import { maker } from '@form-create/element-ui'
 import * as validateUtils from '@/components/ComUtils/validate'
+import './formCreate1'
 
 export const cusFormRule = [
   maker.create('interger-input','cus-field1','cus只能输入数字')
@@ -45,6 +46,12 @@ export const basicFormRule = [
         ]
       }
     ]
+  },
+  {
+    type:'inputBtn',
+    field:'btn',
+    title:'自定义表单组件',
+    value:10
   },
 ]
 
