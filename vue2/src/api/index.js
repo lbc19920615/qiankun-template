@@ -20,7 +20,9 @@
 
 
 import Demo1 from './modules/demo1.ts'
+import ZyDict from "@/api/modules/ZyDict.ts";
 
 export default {
-  Demo1
+  Demo1,
+  ZyDict
 }
