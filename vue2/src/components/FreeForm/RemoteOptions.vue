@@ -61,9 +61,11 @@ export default {
       this.remoteMethod()
     },
     async remoteMethod() {
-      // eslint-disable-next-line no-unused-vars
       const [err, ret] = await to(this.requestMethod())
-      console.log('myRequestMethod', ret)
+      // console.log('myRequestMethod', ret)
+      if (err) {
+        return Promise.reject(err)
+      }
       this.options = ret
     },
     onChange(v) {
