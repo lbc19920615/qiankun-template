@@ -6,9 +6,9 @@ import to from "await-to-js";
  * @returns {Promise<unknown>}
  */
 export async function remoteOptions(promise) {
-  let [err, ret] = await to(promise)
+  let [err, res] = await to(promise)
   if (err) {
     return []
   }
-  return ret
+  return Array.isArray(res.data) ? res.data : []
 }

@@ -1,11 +1,18 @@
 <template>
-  <remote-options :request-method="remoteMethod"></remote-options>
+  <remote-options
+      v-model="val"
+      label-key="dictValue"
+      value-key="dictId"
+      :request-method="remoteMethod"
+      @select="onSelect"
+  ></remote-options>
 </template>
 
 <script>
 import RemoteOptions from "@/components/FreeForm/RemoteOptions";
 import {remoteOptions} from "@/utils/remote";
 import API from "@/api";
+import {ref} from "@vue/composition-api";
 export default {
   name: "DictDropOptions",
   components: {RemoteOptions},
@@ -15,7 +22,7 @@ export default {
       default: ''
     }
   },
-  setup(props) {
+  setup(props, ctx) {
     let remoteMethod = async function() {
       return await remoteOptions(
         API.ZyDict.getDictList({
@@ -23,8 +30,16 @@ export default {
         })
       )
     }
+
+    function onSelect(v) {
+      ctx.emit('select', v)
+    }
+
+    let val = ref(undefined)
     return {
-      remoteMethod
+      val,
+      remoteMethod,
+      onSelect
     }
   }
 }
