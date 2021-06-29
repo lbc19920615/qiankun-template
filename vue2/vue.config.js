@@ -19,6 +19,10 @@ module.exports = {
       '/mock': {
         target: process.env.VUE_APP_BASEURL,
         changeOrigin: true,
+      },
+      '/dev-api': {
+        target: process.env.VUE_ZY_BASEURL,
+        changeOrigin: true,
       }
     },
     hot: true,
