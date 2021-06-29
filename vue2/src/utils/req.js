@@ -46,13 +46,7 @@ export function createRequest(option) {
   }
 }
 
-/**
- * decorator GET
- * @param url { string }
- * @param config { { urlParams: {} } }
- * @returns {(function(*, *, *): void)|*}
- * @constructor
- */
+
 export function GET(url, config = {}) {
   return function (target, key, descriptor) {
     descriptor.value = createRequest({
@@ -63,13 +57,6 @@ export function GET(url, config = {}) {
   }
 }
 
-/**
- * decorator POST
- * @param url { string }
- * @param config { {} }
- * @returns {(function(*, *, *): void)|*}
- * @constructor
- */
 export function POST(url, config = {}) {
   return function (target, key, descriptor) {
     descriptor.value = createRequest({
@@ -80,13 +67,6 @@ export function POST(url, config = {}) {
   }
 }
 
-/**
- * decorator PUT
- * @param url { string }
- * @param config { {} }
- * @returns {(function(*, *, *): void)|*}
- * @constructor
- */
 export function PUT(url, config = {}) {
   return function (target, key, descriptor) {
     descriptor.value = createRequest({
@@ -97,13 +77,6 @@ export function PUT(url, config = {}) {
   }
 }
 
-/**
- * decorator DELETE
- * @param url { string }
- * @param config { {} }
- * @returns {(function(*, *, *): void)|*}
- * @constructor
- */
 export function DELETE(url, config = {}) {
   return function (target, key, descriptor) {
     descriptor.value = createRequest({
