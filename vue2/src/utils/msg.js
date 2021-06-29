@@ -2,12 +2,15 @@ import { Message } from 'element-ui'
 
 /**
  * showTip
- * @param {string} msg
+ * @param msg {string}
+ * @param duration {number}
+ * @param option {{}}
  */
-export function showTip(msg = '') {
+export function showTip(msg = '', duration = 5 * 1000, option = {}) {
   Message({
     message: msg,
     type: 'error',
-    duration: 5 * 1000
+    duration,
+    ...option
   })
 }

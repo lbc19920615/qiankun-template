@@ -1,7 +1,17 @@
+/**
+ * req
+ * @author lbc
+ */
+
 import * as pathToRegexp from 'path-to-regexp'
 import { request } from '@/plugins/request'
 import to from 'await-to-js'
 
+/**
+ *
+ * @param option
+ * @returns {(function(*=, {instanceConf?: *, urlParams?: *}=): Promise<*>)|*}
+ */
 export function createRequest(option) {
   let { method, url, config } = option
   method = method.toUpperCase()
@@ -36,6 +46,13 @@ export function createRequest(option) {
   }
 }
 
+/**
+ * decorator GET
+ * @param url { string }
+ * @param config { { urlParams: {} } }
+ * @returns {(function(*, *, *): void)|*}
+ * @constructor
+ */
 export function GET(url, config = {}) {
   return function (target, key, descriptor) {
     descriptor.value = createRequest({
@@ -46,6 +63,13 @@ export function GET(url, config = {}) {
   }
 }
 
+/**
+ * decorator POST
+ * @param url { string }
+ * @param config { {} }
+ * @returns {(function(*, *, *): void)|*}
+ * @constructor
+ */
 export function POST(url, config = {}) {
   return function (target, key, descriptor) {
     descriptor.value = createRequest({
@@ -56,6 +80,13 @@ export function POST(url, config = {}) {
   }
 }
 
+/**
+ * decorator PUT
+ * @param url { string }
+ * @param config { {} }
+ * @returns {(function(*, *, *): void)|*}
+ * @constructor
+ */
 export function PUT(url, config = {}) {
   return function (target, key, descriptor) {
     descriptor.value = createRequest({
@@ -66,6 +97,13 @@ export function PUT(url, config = {}) {
   }
 }
 
+/**
+ * decorator DELETE
+ * @param url { string }
+ * @param config { {} }
+ * @returns {(function(*, *, *): void)|*}
+ * @constructor
+ */
 export function DELETE(url, config = {}) {
   return function (target, key, descriptor) {
     descriptor.value = createRequest({
