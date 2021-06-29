@@ -70,7 +70,7 @@ export default {
     },
     onChange(v) {
       this.$emit('input', v)
-      const selectedItem = this.options.find(item => item.value === v)
+      const selectedItem = this.options.find(item => item[this.valueKey] === v)
       this.$emit('select', selectedItem)
     }
   }
