@@ -15,16 +15,21 @@ module.exports = {
   runtimeCompiler: true,
   productionSourceMap: false,
   devServer: {
-    proxy: {
-      '/mock': {
-        target: process.env.VUE_APP_BASEURL,
-        changeOrigin: true,
-      },
-      '/dev-api': {
-        target: process.env.VUE_ZY_BASEURL,
-        changeOrigin: true,
-      }
-    },
+    // proxy: {
+    //   '/mock': {
+    //     target: process.env.VUE_APP_BASEURL,
+    //     changeOrigin: true,
+    //   },
+    //   [process.env.VUE_APP_BASE_API]: {
+    //     target: process.env.VUE_ZY_BASEURL,
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       ["^" + process.env.VUE_APP_BASE_API]: "", // /dev-api/test
+    //     },
+    //   }
+    // },
+    // proxy: process.env.VUE_APP_BASEURL,
+    open: true,
     hot: true,
     disableHostCheck: true,
     port,

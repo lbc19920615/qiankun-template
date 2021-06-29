@@ -17,7 +17,16 @@ module.exports = {
     },
     headers: {
       'Access-Control-Allow-Origin': '*'
-    }
+    },
+    proxy: {
+      [process.env.VUE_APP_BASE_API]: {
+        target: process.env.VUE_ZY_BASEURL,
+        changeOrigin: true,
+        pathRewrite: {
+          ["^" + process.env.VUE_APP_BASE_API]: "", // /dev-api/test
+        },
+      }
+    },
   },
   configureWebpack: {
     resolve: {
