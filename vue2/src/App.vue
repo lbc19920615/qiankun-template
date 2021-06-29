@@ -1,12 +1,28 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <template v-for="(routeLink, routeLinkIndex) in routesLinks">
+        <router-link :to="routeLink.path" :key="routeLinkIndex">{{routeLink.name}}</router-link>
+        <template v-if="routeLinkIndex < routesLinks.length - 1">|</template>
+      </template>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import {ref} from "@vue/composition-api";
+import routes from "@/router/routes";
+
+export default {
+  setup() {
+    let routesLinks = ref(routes)
+    return {
+      routesLinks
+    }
+  }
+}
+</script>
 
 <style lang="less">
 #app {
